@@ -11,7 +11,7 @@ $tgid = $time[0];
 $days = $time[1];
 $hour = $time[2];
 $min = $time[3];
-if($days != "0")
+if($days != "90")
 {
     if(empty($days))
     {
