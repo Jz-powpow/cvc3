@@ -443,33 +443,24 @@ $msg2 = trim(strip_tags(getStr($pin,'"message": "','"')));
   #########################
 $bin = substr($cc , 0 , 6);
 $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://bins.su/');
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    $headers = array();
-    $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
-    $headers[] = 'Accept-Language: en-US,en;q=0.9';
-    $headers[] = 'Cache-Control: max-age=0';
-    $headers[] = 'Connection: keep-alive';
-    $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-    $headers[] = 'Host: bins.su';
-    $headers[] = 'Origin: http://bins.su';
-    $headers[] = 'Referer: http://bins.su/';
-    $headers[] = 'Upgrade-Insecure-Requests: 1';
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, 'action=searchbins&bins='.$bin.'&bank=&country=');
-$result = curl_exec($ch);
-    $bincap1 = trim(strip_tags(getStr($result, '<td>Bank</td></tr><tr><td>','</td>')));
-    $country = (getStr($result, '<td>'.$bincap1.'</td><td>','</td>'));
-    $brand = trim(strip_tags(getStr($result, '<td>'.$country.'</td><td>','</td>')));
-    $level = trim(strip_tags(getStr($result, '<td>'.$brand.'</td><td>','</td>')));
-    $type = trim(strip_tags(getStr($result, '<td>'.$level.'</td><td>','</td>')));
-    $bank = trim(strip_tags(getStr($result, '<td>'.$type.'</td><td>','</td>')));
-if(empty($bank))
+curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/'.$bin.'');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+'Host: lookup.binlist.net',
+'Cookie: _ga=GA1.2.549903363.1545240628; _gid=GA1.2.82939664.1545240628',
+'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'));
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'bin='.$bin.'');
+$fim = curl_exec($ch);
+$bank = GetStr($fim, '"bank":{"name":"', '"');
+$name = strtoupper(GetStr($fim, '"name":"', '"'));
+$brand = strtoupper(GetStr($fim, '"brand":"', '"'));
+$country = strtoupper(GetStr($fim, '"country":{"name":"', '"'));
+$scheme = strtoupper(GetStr($fim, '"scheme":"', '"'));
+$emoji = GetStr($fim, '"emoji":"', '"');
+$type =strtoupper(GetStr($fim, '"type":"', '"'));
+if(empty($bank)) 
 {
   $bank = "N/A";
 }
