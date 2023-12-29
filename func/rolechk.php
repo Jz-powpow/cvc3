@@ -3,12 +3,12 @@
 $rl = explode("\n", file_get_contents('func/premium.txt'));
 foreach ($rl as $rls )
     {
-      //sendMessage('5813512210',$rls,$messageId);
+      //sendMessage('6321377431',$rls,$messageId);
       $rls2 = substr($rls,0,10);
       if ($rls2 == $userId)
       {
       $usr = substr($rls,11);
-        //sendMessage('5813512210',$usr,$messageId);
+        //sendMessage('6321377431',$usr,$messageId);
        if ($usr <= 0)
        {
          $dir = "func/premium.txt";
