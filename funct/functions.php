@@ -115,29 +115,7 @@ function logsummary($summary){
         'parse_mode'=>'html'
         
     ]);
-}
-
-function add_days($timestamp,$days){
-    $future = $timestamp + (60*60*24*str_replace('d','',$days));
-    return $future;
-}
-
-function add_minutes($timestamp,$minutes){
-    $future = $timestamp + (60*str_replace('m','',$minutes));
-    return $future;
-}
-
-function multiexplode($delimiters, $string){
-    $one = str_replace($delimiters, $delimiters[0], $string);
-    $two = explode($delimiters[0], $one);
-    return $two;
-}
-
-function array_in_string($str, array $arr) {
-    foreach($arr as $arr_value) { 
-        if (stripos($str,$arr_value) !== false) return true; 
-    }
-    return false;
+	
 }
 function getCards($text) {
     $text = str_replace(["\n", "\r"], '', $text);
