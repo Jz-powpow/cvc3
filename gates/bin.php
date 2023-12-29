@@ -1,28 +1,19 @@
 <?php 
-if ((strpos($message, "/bin") === 0)||(strpos($message, "!bin") === 0)||(strpos($message, ".bin") === 0)){
-  $message = substr($message, 5);
-$message = clean($message);
-$bin = substr($message,0,6);
-  $ch = $curl = curl_init();
-    
-curl_setopt_array($curl, array(
-CURLOPT_URL => 'https://zylalabs.com/api/3100/bin+lookup+api/3286/bin+checker?bin=373723',
-CURLOPT_RETURNTRANSFER => true,
-CURLOPT_ENCODING => '',
-CURLOPT_MAXREDIRS => 10,
-CURLOPT_TIMEOUT => 0,
-CURLOPT_FOLLOWLOCATION => true,
-CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-CURLOPT_CUSTOMREQUEST => 'GET',
-CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer 3112|PlsFKPeSgfWiKlvcXHGBs8xirjelH1wYrjNZMRg5'
-    ),
-));
-    
-$response = curl_exec($curl);
-    
-curl_close($curl);
-echo $response;
+}if(strpos($text,"/bin") !== false){ 
+$bin = trim(str_replace("/bin","",$text)); 
+
+$data = json_decode(file_get_contents("https://bins-su-api.vercel.app/api/$bin"),true);
+$bank = $data['data']['bin'];
+$vendor =  $data['data']['vendor'];
+$type =  $data['data']['type'];
+$level =  $data['data']['level'];
+$bank =  $data['data']['bank'];
+$country =  $data['data']['country'];
+
+ if($data['data']){
+bot('sendmessage', [
+                'chat_id' =>$chat_id,
+                'text' =>"***
   {
     $msg = "𝗡𝗢𝗧 𝗩𝗔𝗟𝗜𝗗 ❌";
     goto binn;
@@ -59,22 +50,4 @@ $header
  reply_to($chatId,$msg,$messageId);
 
 }
-
- "status": 200,
-  "success": true,
-  "isValid": true,
-  "message": "The BIN number is valid.",
-  "data": {
-    "bin_iin": "373723",
-    "card_brand": "AMERICAN EXPRESS",
-    "card_type": "CREDIT",
-    "card_level": "OPTIMA",
-    "issuer_name_bank": "AMERICAN EXPRESS US CONSUMER",
-    "issuer_bank_website": "------",
-    "issuer_bank_phone": "------",
-    "iso_country_name": "UNITED STATES",
-    "iso_country_code": "US"
-  }
-}
-  
 ?>
