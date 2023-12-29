@@ -22,9 +22,9 @@ $username = $update["message"]["from"]["username"];
 $message = $update["message"]["text"];
 $messageId = $update["message"]["message_id"];
 //$pm = $message['reply_to_message']['text'];
-$bowner = "<a href='t.me/cyberxbd'>CyberXBD</a>";
-//$header = "CYBERXBD";
-$mail = 'MrXdragon'.random_strings(6).'';
+$bowner = "<a href='https://t.me/hexnynejz'>HexnyneJz</a>";
+//$header = "HexnyneJz";
+$mail = 'Jnx'.random_strings(6).'';
 $pass = random_strings(8);
 $user = "<a href='tg://user?id=$userId'>$username</a>";
 /*
