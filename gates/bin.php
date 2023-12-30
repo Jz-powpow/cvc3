@@ -2,12 +2,7 @@
 if ((strpos($message, "/bin $bin") === 0)||(strpos($message, "!bin $bin") === 0)||(strpos($message, ".bin $bin") === 0)){
 
 
-  $mail = random_strings(5)."@gmail.com";
-
-
-
-
-  $upd = urlencode("
+$upd = urlencode("
 ➜ 𝘾𝙃𝙀𝘾𝙆𝙄𝙉𝙂 𝙎𝙏𝘼𝙍𝙏𝙀𝘿...
 ");
 $sss = reply_to($chatId,"$upd",$messageId);
