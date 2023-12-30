@@ -126,16 +126,26 @@ $start = microtime(true);
 #===========[1st REQ]=======#
 while(true)
 {
-$ch = curl_init();  
-curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/payment_methods');  
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);  
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
-curl_setopt($ch, CURLOPT_USERPWD, $sk. ':' . '');  
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'type=card&card[number]='.$cc.'&card[exp_month]='.$mes.'&card[exp_year]='.$ano.'&billing_details[address][line1]='.$street.'&billing_details[address][city]='.$city.'&billing_details[address][state]='.$state.'&billing_details[address][postal_code]='.$postcode.'&billing_details[address][country]='.$country.'&billing_details[name]='.$name.'+'.$last.'&billing_details[email]='.$email.'');  
-$r1 = curl_exec($ch);  
-if (strpos($r1, "rate_limit"))   
+$curl = curl_init();
+    
+curl_setopt_array($curl, array(
+CURLOPT_URL => 'https://zylalabs.com/api/3100/bin+lookup+api/3286/bin+checker?bin=373723',
+CURLOPT_RETURNTRANSFER => true,
+CURLOPT_ENCODING => '',
+CURLOPT_MAXREDIRS => 10,
+CURLOPT_TIMEOUT => 0,
+CURLOPT_FOLLOWLOCATION => true,
+CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+CURLOPT_CUSTOMREQUEST => 'GET',
+CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer 3112|PlsFKPeSgfWiKlvcXHGBs8xirjelH1wYrjNZMRg5'
+    ),
+));
+    
+$response = curl_exec($curl);
+    
+curl_close($curl);
+echo $response;
 {  
     continue;  
 }  
