@@ -1,7 +1,5 @@
 <?php
 
-$time_start = microtime(true);
-
 if ((strpos($message, "/bin $bin") === 0)||(strpos($message, "!bin $bin") === 0)||(strpos($message, ".bin $bin") === 0)){
   sendaction($chatId, typing);
 $bin = substr($message, 5);
