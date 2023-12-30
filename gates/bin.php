@@ -1,8 +1,28 @@
 <?php
 
 if ((strpos($message, "/bin") === 0)||(strpos($message, "!bin") === 0)||(strpos($message, ".bin") === 0)){
+
+ $mail = random_strings(5)."@gmail.com";
+//---------------------------------------//
+# -------------------- [PROXY SECTION] -------------------#
+
+//---------------------------------------//
+$upd = urlencode("
+➜ 𝘾𝙃𝙀𝘾𝙆𝙄𝙉𝙂 𝙎𝙏𝘼𝙍𝙏𝙀𝘿...
+");
+$sss = reply_to($chatId,"$upd",$messageId);
+$respon = json_decode($sss, TRUE);
+$message_id_1 = $respon['result']['message_id'];
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    extract($_POST);
+} elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
+    extract($_GET);
+} 
   sendaction($chatId, typing);
-$bin = substr($message, 5);
+$bin = substr($message, 6);
 $bin = substr("$bin", 0, 6);
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/'.$bin.'');
