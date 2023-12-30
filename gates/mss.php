@@ -53,39 +53,37 @@ if (strlen($mes) == 1) $mes = "0$mes";
 if (strlen($ano) == 2) $ano = "20$ano";
 $bin = substr($cc , 0 , 6);
 $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://bins.su/');
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    $headers = array();
-    $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
-    $headers[] = 'Accept-Language: en-US,en;q=0.9';
-    $headers[] = 'Cache-Control: max-age=0';
-    $headers[] = 'Connection: keep-alive';
-    $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-    $headers[] = 'Host: bins.su';
-    $headers[] = 'Origin: http://bins.su';
-    $headers[] = 'Referer: http://bins.su/';
-    $headers[] = 'Upgrade-Insecure-Requests: 1';
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, 'action=searchbins&bins='.$bin.'&bank=&country=');
-$result = curl_exec($ch);
-    $bincap1 = trim(strip_tags(getStr($result, '<td>Bank</td></tr><tr><td>','</td>')));
-    $country = (getStr($result, '<td>'.$bincap1.'</td><td>','</td>'));
-    $country2 = (getStr($result, '<td>'.$bincap1.'</td><td>','</td>'));
-
-    
-  if(empty($country))
-{
-  $country = "US";
-  $country2 = "US";
+curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/'.$bin.'');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+'Host: lookup.binlist.net',
+'Cookie: _ga=GA1.2.549903363.1545240628; _gid=GA1.2.82939664.1545240628',
+'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'));
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '');
+$fim = curl_exec($ch);
+$bank = GetStr($fim, '"bank":{"name":"', '"');
+$name = GetStr($fim, '"name":"', '"');
+$brand = GetStr($fim, '"brand":"', '"');
+$country = GetStr($fim, '"country":{"name":"', '"');
+$emoji = GetStr($fim, '"emoji":"', '"');
+$scheme = GetStr($fim, '"scheme":"', '"');
+$type = GetStr($fim, '"type":"', '"');
+$currency = GetStr($fim, '"currency":"', '"');
+///$test2 = GetStr($fim, '"alpha2":"', '"'); ////country abbreviated example (US)
+if(strpos($fim, '"type":"credit"') !== false){
+$bin = 'Credit';
+}else{
+$bin = 'Debit';
 }
-if($country == "SG")
-{
-    $country2 = "US";
+curl_close($ch);
+
+ 
+curl_close($ch);
+sendMessage($chatId, '<b>✅ Valid Bin</b>%0A<b>Bank:</b> '.$bank.'%0A<b>Country:</b> '.$name.''.$emoji.'%0A<b>Brand:</b> '.$brand.'%0A<b>Card:</b> '.$scheme.'%0A<b>Type:</b> '.$type.'%0A<b>Currency:</b> '.$currency.'%0A<b>Checked By:</b> @'.$username.'%0A%0A<b>Bot Made by: DeadAnonNp </b>');
+}
+curl_close($ch);
 }
   //  $country = $country2;
 //==================[Randomizing Details]======================//
