@@ -1,6 +1,19 @@
 <?php
-
 if ((strpos($message, "/bin $bin") === 0)||(strpos($message, "!bin $bin") === 0)||(strpos($message, ".bin $bin") === 0)){
+
+
+  $mail = random_strings(5)."@gmail.com";
+
+
+
+
+  $upd = urlencode("
+➜ 𝘾𝙃𝙀𝘾𝙆𝙄𝙉𝙂 𝙎𝙏𝘼𝙍𝙏𝙀𝘿...
+");
+$sss = reply_to($chatId,"$upd",$messageId);
+$respon = json_decode($sss, TRUE);
+$message_id_1 = $respon['result']['message_id'];
+
   sendaction($chatId, typing);
 $bin = substr($message, 5);
 $bin = substr("$bin", 0, 6);
