@@ -30,7 +30,7 @@ edit_message($chatId," Startedd....",$message_id_1);
 while($c>0)
 {
 
-$sk ="sk_live_Q0gQC9coYUIiUshIHCdWKBiD";
+$sk ="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";
 
 //------[Randomize Description]------//
 $word = array(
