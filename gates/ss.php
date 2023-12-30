@@ -84,6 +84,7 @@ $vh = trim(strip_tags(getStr($r1,'{"common":{"form":{"honeypot":{"version_hash":
 $gkey = trim(strip_tags(getStr($r1,"input type='hidden' class='gform_hidden' name='gform_unique_id' value='","'"))); 
 $hdval = trim(strip_tags(getStr($r1,"<input type='hidden' class='gform_hidden' name='state_6' value='","'")));
 $nonce = trim(strip_tags(getStr($r1,'"create_payment_intent_nonce":"','"'))); 
+
 ################################
 $ch = curl_init();
 
