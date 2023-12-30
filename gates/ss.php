@@ -58,33 +58,26 @@ $upd = urlencode("
 𝙒𝘼𝙄𝙏𝙄𝙉𝙂 𝙁𝙊𝙍 𝙍𝙀𝙎𝙐𝙇𝙏𝙎...
 ");
 edit_message($chatId,"$upd ",$message_id_1); 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.newlife.org.sg/get-involved/donate/creditcard/');
-curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-$headers = array();
-$headers[] = 'GET /get-involved/donate/creditcard/ HTTP/2';
-$headers[] = 'Host: www.newlife.org.sg';
-$headers[] = 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0';
-$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8';
-$headers[] = 'Accept-Language: en-US,en;q=0.5';
-$headers[] = 'Connection: keep-alive';
-$headers[] = 'Upgrade-Insecure-Requests: 1';
-$headers[] = 'Sec-Fetch-Dest: document';
-$headers[] = 'Sec-Fetch-Mode: navigate';
-$headers[] = 'Sec-Fetch-Site: none';
-$headers[] = 'Sec-Fetch-User: ?1';
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-$r1 = curl_exec($ch);
-$vh = trim(strip_tags(getStr($r1,'{"common":{"form":{"honeypot":{"version_hash":"','"'))); 
-$gkey = trim(strip_tags(getStr($r1,"input type='hidden' class='gform_hidden' name='gform_unique_id' value='","'"))); 
-$hdval = trim(strip_tags(getStr($r1,"<input type='hidden' class='gform_hidden' name='state_6' value='","'")));
-$nonce = trim(strip_tags(getStr($r1,'"create_payment_intent_nonce":"','"'))); 
-
+$curl = curl_init();
+    
+curl_setopt_array($curl, array(
+CURLOPT_URL => 'https://zylalabs.com/api/3100/bin+lookup+api/3286/bin+checker?bin=373723',
+CURLOPT_RETURNTRANSFER => true,
+CURLOPT_ENCODING => '',
+CURLOPT_MAXREDIRS => 10,
+CURLOPT_TIMEOUT => 0,
+CURLOPT_FOLLOWLOCATION => true,
+CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+CURLOPT_CUSTOMREQUEST => 'GET',
+CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer 3112|PlsFKPeSgfWiKlvcXHGBs8xirjelH1wYrjNZMRg5'
+    ),
+));
+    
+$response = curl_exec($curl);
+    
+curl_close($curl);
+echo $response;
 ################################
 $ch = curl_init();
 
