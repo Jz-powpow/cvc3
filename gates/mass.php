@@ -231,12 +231,7 @@ hits:
   $rslt 
   "),$message_id_1);
   $c--;
-}
-edit_message($chatId,urlencode("
-  𝙁𝙄𝙉𝙄𝙎𝙃𝙀𝘿 ✅
-  "),$message_id_1);
-  }
-}
+
   
 ?>
  
