@@ -117,43 +117,6 @@ function logsummary($summary){
     ]);
 	
 }
-function getCards($text) {
-    $text = str_replace(["\n", "\r"], '', $text);
-    preg_match_all('/[0-9]+/', $text, $card);
-    $card = $card[0];  // get the first match
-
-    if (!$card || count($card) < 3) {
-        return;
-    }
-
-    if (count($card) == 3) {
-        $cc = $card[0];
-        if (strlen($card[1]) == 3) {
-            $mes = substr($card[2], 0, 2);
-            $ano = substr($card[2], 2);
-            $cvv = $card[1];
-        } else {
-            $mes = substr($card[1], 0, 2);
-            $ano = substr($card[1], 2);
-            $cvv = $card[2];
-        }
-    } else {
-        $cc = $card[0];
-        if (strlen($card[1]) == 3) {
-            $mes = $card[2];
-            $ano = $card[3];
-            $cvv = $card[1];
-        } else {
-            $mes = $card[1];
-            $ano = $card[2];
-            $cvv = $card[3];
-        }
-        if (strlen($mes) == 2 && ($mes > '12' || $mes < '01')) {
-            $ano1 = $mes;
-            $mes = $ano;
-            $ano = $ano1;
-        }
-    }
 
     if ($cc[0] == 3 && strlen($cc) != 15 || strlen($cc) != 16 || !in_array(intval($cc[0]), [3,4,5,6])) {
         return;
