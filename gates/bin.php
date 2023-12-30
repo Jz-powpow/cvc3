@@ -1,20 +1,7 @@
 <?php
 if ((strpos($message, "/bin $bin") === 0)||(strpos($message, "!bin $bin") === 0)||(strpos($message, ".bin $bin") === 0)){
 
-
-$mail = random_strings(5)."@gmail.com";
-//---------------------------------------//
-# -------------------- [PROXY SECTION] -------------------#
-
-//---------------------------------------//
-$upd = urlencode("
-➜ 𝘾𝙃𝙀𝘾𝙆𝙄𝙉𝙂 𝙎𝙏𝘼𝙍𝙏𝙀𝘿...
-");
-$sss = reply_to($chatId,"$upd",$messageId);
-$respon = json_decode($sss, TRUE);
-$message_id_1 = $respon['result']['message_id'];
-
-  $ch = curl_init();
+$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/'.$bin.'');
 curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
