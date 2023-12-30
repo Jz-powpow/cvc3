@@ -1,6 +1,4 @@
 <?php
-if ((strpos($message, "/gen") === 0)||(strpos($message, "!gen") === 0)||(strpos($message, ".gen") === 0)){
-
 class creditCardGenerator
 {
     protected $bin;
