@@ -15,14 +15,24 @@ $respon = json_decode($sss, TRUE);
 $message_id_1 = $respon['result']['message_id'];
 
 
- if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    extract($_POST);
-} elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
-    extract($_GET);
-}
-
+# -------------------- [PROXY SECTION] -------------------#
+//==================[Randomizing Details-END]======================//  
+function value($str,$find_start,$find_end)
 {
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $start = strpos($str,$find_start);
+    if ($start === false) 
+    {
+        return "";
+    }
+    $length = strlen($find_start);
+    $end    = strpos(substr($str,$start +$length),$find_end);
+    return trim(substr($str,$start +$length,$end));
+}
+function mod($dividendo,$divisor)
+{
+    return round($dividendo - (floor($dividendo/$divisor)*$divisor));
+}
+ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     extract($_POST);
 } elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
     extract($_GET);
