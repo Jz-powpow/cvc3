@@ -14,6 +14,13 @@ $sss = reply_to($chatId,"$upd",$messageId);
 $respon = json_decode($sss, TRUE);
 $message_id_1 = $respon['result']['message_id'];
 
+
+ if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    extract($_POST);
+} elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
+    extract($_GET);
+}
+
 {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     extract($_POST);
