@@ -407,11 +407,11 @@ if(empty($msg))
   $msg = $msg5;
 }
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/payment_intents/'.$pi.'?key=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_stripe_sdk=false&client_secret='.$scrt.'');
+curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/payment_intents/'.$pi.'?key=pk_live_51Ht5CEKE4pSdIaSwY7QBSeaC0YH52xcGT0pzSwfNrYdaOPZXuXPhot3IPleNbCNesTVgbmQCeLg1usj5yXS0GD8N00O35yDYKv&is_stripe_sdk=false&client_secret='.$scrt.'');
 curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 $headers = array();
-$headers[] = 'GET /v1/payment_intents/'.$pi.'?key=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_stripe_sdk=false&client_secret='.$scrt.' HTTP/2';
+$headers[] = 'GET /v1/payment_intents/'.$pi.'?key=pk_live_51Ht5CEKE4pSdIaSwY7QBSeaC0YH52xcGT0pzSwfNrYdaOPZXuXPhot3IPleNbCNesTVgbmQCeLg1usj5yXS0GD8N00O35yDYKv&is_stripe_sdk=false&client_secret='.$scrt.' HTTP/2';
 $headers[] = 'Host: api.stripe.com';
 $headers[] = 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0';
 $headers[] = 'Accept: application/json';
@@ -451,31 +451,28 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'));
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'bin='.$bin.'');
+curl_setopt($ch, CURLOPT_POSTFIELDS, '');
 $fim = curl_exec($ch);
 $bank = GetStr($fim, '"bank":{"name":"', '"');
-$name = strtoupper(GetStr($fim, '"name":"', '"'));
-$brand = strtoupper(GetStr($fim, '"brand":"', '"'));
-$country = strtoupper(GetStr($fim, '"country":{"name":"', '"'));
-$scheme = strtoupper(GetStr($fim, '"scheme":"', '"'));
+$name = GetStr($fim, '"name":"', '"');
+$brand = GetStr($fim, '"brand":"', '"');
+$country = GetStr($fim, '"country":{"name":"', '"');
 $emoji = GetStr($fim, '"emoji":"', '"');
-$type =strtoupper(GetStr($fim, '"type":"', '"'));
-if(empty($bank)) 
-{
-  $bank = "N/A";
+$scheme = GetStr($fim, '"scheme":"', '"');
+$type = GetStr($fim, '"type":"', '"');
+$currency = GetStr($fim, '"currency":"', '"');
+if(strpos($fim, '"type":"credit"') !== false){
+$bin = 'Credit';
+}else{
+$bin = 'Debit';
 }
-  if(empty($country))
-{
-  $country = "N/A";
+curl_close($ch);
+
+ 
+curl_close($ch);
+sendMessage($chatId, '<b>✅ Valid Bin</b>%0A<b>Bank:</b> '.$bank.'%0A<b>Country:</b> '.$name.''.$emoji.'%0A<b>Brand:</b> '.$brand.'%0A<b>Card:</b> '.$scheme.'%0A<b>Type:</b> '.$type.'%0A<b>Currency:</b> '.$currency.'%0A<b>Checked By:</b> @'.$username.'%0A%0A<b>Bot Made by  LapanWasTaken</b>');
 }
-  if(empty($brand))
-{
-  $brand = "N/A";
-}
-  if(empty($type))
-{
-  $type = "N/A";
-}
+curl_close($ch);
 
   #########################
   
