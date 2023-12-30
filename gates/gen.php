@@ -1,6 +1,11 @@
 <?php
+if ((strpos($message, "/gen") === 0)||(strpos($message, "!gen") === 0)||(strpos($message, ".gen") === 0)){
+  
 
-function sendMessageWithInlineKeyboard($chatId, $response, $messageId = null) {
+$mail = random_strings(5)."@gmail.com";
+//---------------------------------------//
+    function sendMessageWithInlineKeyboard($chatId, $response, $messageId = null) 
+    {
     $inline_keyboard = array(
         array(
             array("text" => "𝑮𝒆𝒏𝒆𝒓𝒂𝒕𝒆 𝑨𝒈𝒂𝒊𝒏", "callback_data" => "/gen")
@@ -27,7 +32,8 @@ function sendMessageWithInlineKeyboard($chatId, $response, $messageId = null) {
 }
 
 //======inline keyboard end=======//
-function editMessage($chatId, $messageId, $text) {
+function editMessage($chatId, $messageId, $text) 
+{
     $inline_keyboard = array(
         array(
             array("text" => "𝑮𝒆𝒏𝒆𝒓𝒂𝒕𝒆 𝑨𝒈𝒂𝒊𝒏", "callback_data" => "/gen")
@@ -51,7 +57,8 @@ function editMessage($chatId, $messageId, $text) {
 }
 //==========function editMessage====//
 
-function saveLastUsedBin($userId, $bin) {
+function saveLastUsedBin($userId, $bin) 
+{
     // Each user has a unique file named by their ID
     $filename = "bincache/last_used_bin_$userId.txt";
 
@@ -73,7 +80,8 @@ function saveLastUsedBin($userId, $bin) {
     file_put_contents($filename, implode("\n", $data));
 }
 
-function getLastUsedBin($userId) {
+function getLastUsedBin($userId) 
+{
     $filename = "bincache/last_used_bin_$userId.txt";
     
     if (!file_exists($filename)) {
@@ -91,7 +99,8 @@ function getLastUsedBin($userId) {
 
     
 
-function generateCC($input, $quantity = 20) {
+function generateCC($input, $quantity = 20) 
+{
     // Fetch BIN information outside the loop
     $binInfo = fetchBINInfo($input);
 
@@ -117,7 +126,8 @@ function generateCC($input, $quantity = 20) {
     // Generate the response string
 $response = "<b>🧾𝑯𝒆𝒓𝒆 𝒂𝒓𝒆 𝒚𝒐𝒖𝒓 𝒄𝒂𝒓𝒅𝒔 𝑳𝒐𝒍𝒊𝒄𝒐𝒏\n\n•├𝑩𝒊𝒏 ⇾ $input\n•├𝑨𝒎𝒐𝒖𝒏𝒕 ⇾ $quantity\n╔═════════════════╗\n</b>";
 
-foreach ($cardsResponse as $card) {
+foreach ($cardsResponse as $card) 
+{
     // Access individual elements of each credit card and append to the response string
     $cc = $card['cc'];
     $mm = $card['mm'];
@@ -144,7 +154,8 @@ $response .= "<b>\n•├Dev » <code>@EscaliBud</code></b>";
     return $response;
 }
 
-function generateCCNumber($bin, $input) {
+function generateCCNumber($bin, $input) 
+{
     $ccNumber = $bin; 
     $remainingDigits = 16 - strlen($bin) - 1;
 
@@ -156,7 +167,8 @@ function generateCCNumber($bin, $input) {
     return $ccNumber;
 }
 
-function calculateLuhnCheckDigit($number) {
+function calculateLuhnCheckDigit($number) 
+{
     $sum = 0;
     $numDigits = strlen($number);
     $parity = $numDigits % 2;
@@ -178,11 +190,13 @@ function calculateLuhnCheckDigit($number) {
     return $checkDigit;
 }
 
-function generateRandomCVV() {
+function generateRandomCVV() 
+{
     return str_pad(rand(1, 999), 3, "0", STR_PAD_LEFT);
 }
 
-function generateRandomCVVWithLuhn($ccNumber) {
+function generateRandomCVVWithLuhn($ccNumber) 
+{
     $randomCVV = str_pad(rand(1, 999), 3, "0", STR_PAD_LEFT); // Generate a random 3-digit CVV
     $ccNumberWithCVV = $ccNumber . $randomCVV;
     $luhnCheckDigit = calculateLuhnCheckDigit($ccNumberWithCVV);
@@ -190,7 +204,8 @@ function generateRandomCVVWithLuhn($ccNumber) {
 }
 
 
-function parseCCFormat($input) {
+function parseCCFormat($input) 
+{
     if (strpos($input, '|') !== false) {
         $ccInfo = [];
         $parts = explode('|', $input);
@@ -225,7 +240,8 @@ $message = $_POST['message'] ?? '';
 //--------bin info--------//
 
 
-function fetchBINInfo($bin) {
+function fetchBINInfo($bin) 
+{
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/' . $bin);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
